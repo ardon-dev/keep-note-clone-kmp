@@ -1,14 +1,19 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
+This is a Kotlin Multiplatform project targeting Android, iOS, Desktop (Pending).
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+I used shared UI with compose multiplaform, so design is the same in both apps. To have some architecture decided to use Koin multiplatform and Room as local database.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+iOS Screenshots:
+
+<img src="https://github.com/user-attachments/assets/200a4cd7-4821-4d62-9cbd-78fd2c08ed97" alt="Alt Text" width="294.75" height="639">
+<img src="https://github.com/user-attachments/assets/8e67f524-8fc2-4d24-8516-e89169c5e81e" alt="Alt Text" width="294.75" height="639">
+<img src="https://github.com/user-attachments/assets/9bc6d184-ef4b-48a7-883d-62c6077d7e39" alt="Alt Text" width="294.75" height="639">
 
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+Android Screenshots:
+
+
+<img src="https://github.com/user-attachments/assets/56ac90c9-d3b4-457e-9ce1-166415c6b6c2" alt="Alt Text" width="294.75" height="639">
+<img src="https://github.com/user-attachments/assets/54a4839c-96cf-4fad-ab3b-035427610504" alt="Alt Text" width="294.75" height="639">
+<img src="https://github.com/user-attachments/assets/98d66365-0f81-4fc4-902b-c968a02c1514" alt="Alt Text" width="294.75" height="639">
+
+
