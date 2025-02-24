@@ -2,17 +2,17 @@ package com.ardondev.noteskmp.ui.screens.notes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ardondev.noteskmp.data.local.NoteDao
-import com.ardondev.noteskmp.data.local.NoteEntity
+import com.ardondev.noteskmp.domain.repository.NoteRepository
+import com.ardondev.noteskmp.domain.model.Note
 import com.ardondev.noteskmp.ui.UiStateHandler
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class NotesViewModel(private val noteDao: NoteDao) : ViewModel() {
+class NotesViewModel(private val noteRepository: NoteRepository) : ViewModel() {
 
     /* UI State */
 
-    private val _uiStateHandler = UiStateHandler<List<NoteEntity>>()
+    private val _uiStateHandler = UiStateHandler<List<Note>>()
     val uiState = _uiStateHandler.uiState
 
     /* Get notes */
@@ -20,7 +20,7 @@ class NotesViewModel(private val noteDao: NoteDao) : ViewModel() {
     fun getNotes() {
         viewModelScope.launch {
             _uiStateHandler.setLoading()
-            noteDao.getAll()
+            noteRepository.getAll()
                 .catch { e ->
                     _uiStateHandler.setError(e.message.orEmpty())
                 }
@@ -32,18 +32,18 @@ class NotesViewModel(private val noteDao: NoteDao) : ViewModel() {
 
     /* Update note clipped value */
 
-    fun clipNote(note: NoteEntity) {
+    fun clipNote(note: Note) {
         viewModelScope.launch {
             val clipped = note.clipped
-            noteDao.update(note.copy(clipped = !clipped))
+            noteRepository.update(note.copy(clipped = !clipped))
         }
     }
 
     /* Delete note */
 
-    fun deleteNote(note: NoteEntity) {
+    fun deleteNote(note: Note) {
         viewModelScope.launch {
-            noteDao.delete(note)
+            noteRepository.delete(note)
         }
     }
 

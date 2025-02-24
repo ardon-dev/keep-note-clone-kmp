@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import com.ardondev.noteskmp.data.local.dao.NoteDao
+import com.ardondev.noteskmp.data.local.entity.NoteEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 

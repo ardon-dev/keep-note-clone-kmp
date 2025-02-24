@@ -4,8 +4,8 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ardondev.noteskmp.data.local.NoteDao
-import com.ardondev.noteskmp.data.local.NoteEntity
+import com.ardondev.noteskmp.domain.repository.NoteRepository
+import com.ardondev.noteskmp.domain.model.Note
 import com.ardondev.noteskmp.ui.util.NoteColor
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -13,8 +13,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 class AddNoteViewModel(
-    private val noteDao: NoteDao
-): ViewModel() {
+    private val noteRepository: NoteRepository
+) : ViewModel() {
 
     /* Note form states */
 
@@ -73,13 +73,14 @@ class AddNoteViewModel(
     fun addNote() {
         viewModelScope.launch {
             try {
-                val note = NoteEntity(
+                val note = Note(
                     title = title.value,
                     text = text.value,
                     color = color.value,
-                    modificationDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+                    modificationDate = Clock.System.now()
+                        .toLocalDateTime(TimeZone.currentSystemDefault()).toString()
                 )
-                val result = noteDao.insert(note)
+                val result = noteRepository.insert(note)
                 if (result != null) {
                     error.value = null
                     insertNoteWasSuccess.value = true

@@ -4,8 +4,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ardondev.noteskmp.data.local.NoteDao
-import com.ardondev.noteskmp.data.local.NoteEntity
+import com.ardondev.noteskmp.domain.repository.NoteRepository
+import com.ardondev.noteskmp.domain.model.Note
 import com.ardondev.noteskmp.ui.UiStateHandler
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import kotlinx.datetime.toLocalDateTime
 
 class NoteDetailViewModel(
     private val savedStateHandle: SavedStateHandle,
-    private val noteDao: NoteDao
+    private val noteRepository: NoteRepository
 ) : ViewModel() {
 
     /* Note */
@@ -50,13 +50,13 @@ class NoteDetailViewModel(
         clipped.value = value
     }
 
-    private val _uiStateHandler = UiStateHandler<NoteEntity>()
+    private val _uiStateHandler = UiStateHandler<Note>()
     val uiState = _uiStateHandler.uiState
 
     fun getNote() {
         viewModelScope.launch {
             _uiStateHandler.setLoading()
-            noteDao.getById(noteId)
+            noteRepository.getById(noteId)
                 .catch { error -> _uiStateHandler.setError(error.message.orEmpty()) }
                 .collect { note -> _uiStateHandler.setSuccess(note) }
         }
@@ -64,15 +64,16 @@ class NoteDetailViewModel(
 
     /* Update note */
 
-    fun updateNote(note: NoteEntity) {
+    fun updateNote(note: Note) {
         viewModelScope.launch {
-            noteDao.update(
+            noteRepository.update(
                 note.copy(
                     title = title.value,
                     text = text.value,
                     color = color.value,
                     clipped = clipped.value,
-                    modificationDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+                    modificationDate = Clock.System.now()
+                        .toLocalDateTime(TimeZone.currentSystemDefault()).toString()
                 )
             )
         }

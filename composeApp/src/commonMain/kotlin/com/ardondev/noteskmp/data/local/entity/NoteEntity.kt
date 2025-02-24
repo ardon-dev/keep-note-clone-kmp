@@ -1,4 +1,4 @@
-package com.ardondev.noteskmp.data.local
+package com.ardondev.noteskmp.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

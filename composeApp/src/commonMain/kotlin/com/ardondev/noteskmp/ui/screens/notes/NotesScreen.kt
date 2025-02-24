@@ -34,7 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.ardondev.noteskmp.data.local.NoteEntity
+import com.ardondev.noteskmp.domain.model.Note
 import com.ardondev.noteskmp.ui.UiState
 import com.ardondev.noteskmp.ui.util.Keep
 import com.ardondev.noteskmp.ui.util.KeepFill
@@ -93,10 +93,10 @@ fun NotesScreen(
 
 @Composable
 fun NotesScreenContent(
-    notes: List<NoteEntity>,
-    onClickNote: (NoteEntity) -> Unit,
-    onClipNote: (NoteEntity) -> Unit,
-    onRemove: (NoteEntity) -> Unit,
+    notes: List<Note>,
+    onClickNote: (Note) -> Unit,
+    onClipNote: (Note) -> Unit,
+    onRemove: (Note) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -133,10 +133,10 @@ fun AddNoteFloatingActionButton(
 
 @Composable
 fun NoteItem(
-    note: NoteEntity,
-    onClick: (NoteEntity) -> Unit,
-    onClip: (NoteEntity) -> Unit,
-    onRemove: (NoteEntity) -> Unit
+    note: Note,
+    onClick: (Note) -> Unit,
+    onClip: (Note) -> Unit,
+    onRemove: (Note) -> Unit
 ) {
     val noteColor =
         NoteColor.entries.firstOrNull { it.colorString == note.color }?.getColor() ?: Color.White
