@@ -39,6 +39,14 @@ class NotesViewModel(private val noteDao: NoteDao) : ViewModel() {
         }
     }
 
+    /* Delete note */
+
+    fun deleteNote(note: NoteEntity) {
+        viewModelScope.launch {
+            noteDao.delete(note)
+        }
+    }
+
     init {
         getNotes()
     }
